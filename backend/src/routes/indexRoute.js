@@ -1,4 +1,4 @@
-module.exports = function (application) {
+module.exports = function indexRoute(application) {
   application.get('/', (req, res) => {
     application.src.controllers.indexController.index(application, req, res);
   });
