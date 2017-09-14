@@ -76,9 +76,22 @@ const insertPeople = (peopleJSON) => {
   }, 1000);
 };
 
+const getAll = cb => new Promise((resolve, reject) => {
+  const db = app.config.dbConnection.connSqlite();
+  return db.all('SELECT * FROM People', [], (err, rows) => {
+    if (err) {
+      reject(err);
+    } else {
+      resolve(cb(rows));
+    }
+    db.close();
+  });
+}).catch(err => console.error(err));
+
 module.exports = function PeopleData(application) {
   app = application;
   return {
     insertPeople,
+    getAll,
   };
 };

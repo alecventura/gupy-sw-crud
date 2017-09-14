@@ -13,9 +13,7 @@ const generateFilmsInsertSQL = (filmsJSON) => {
 };
 
 const insertFilms = (filmsJSON) => {
-  // Clear the tables before insert data on then
   const db = app.config.dbConnection.connSqlite();
-  // Clear the table before insert data on it
   db.run('DELETE FROM Films');
   setTimeout(() => {
     db.run(generateFilmsInsertSQL(filmsJSON));
@@ -23,9 +21,22 @@ const insertFilms = (filmsJSON) => {
   }, 1000);
 };
 
+const getAll = cb => new Promise((resolve, reject) => {
+  const db = app.config.dbConnection.connSqlite();
+  return db.all('SELECT * FROM Films', [], (err, rows) => {
+    if (err) {
+      reject(err);
+    } else {
+      resolve(cb(rows));
+    }
+    db.close();
+  });
+}).catch(err => console.error(err));
+
 module.exports = function FilmsData(application) {
   app = application;
   return {
     insertFilms,
+    getAll,
   };
 };

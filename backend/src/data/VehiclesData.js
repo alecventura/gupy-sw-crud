@@ -77,9 +77,22 @@ const insertVehicles = (vehiclesJSON) => {
   }, 1000);
 };
 
+const getAll = cb => new Promise((resolve, reject) => {
+  const db = app.config.dbConnection.connSqlite();
+  return db.all('SELECT * FROM Vehicles', [], (err, rows) => {
+    if (err) {
+      reject(err);
+    } else {
+      resolve(cb(rows));
+    }
+    db.close();
+  });
+}).catch(err => console.error(err));
+
 module.exports = function VehiclesData(application) {
   app = application;
   return {
     insertVehicles,
+    getAll,
   };
 };

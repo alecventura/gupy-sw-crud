@@ -12,6 +12,7 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "consign": "^0.1.6",
+    "cors": "^2.8.4",
     "express": "^4.15.4",
     "express-validator": "^3.2.1",
     "node-fetch": "^1.7.3",
