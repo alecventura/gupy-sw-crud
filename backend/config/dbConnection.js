@@ -2,7 +2,6 @@ const sqlite3 = require('sqlite3').verbose();
 
 const connSqlite = () => {
   console.log('Openning connections');
-  // const db = new sqlite3.Database(':memory:');
   const db = new sqlite3.Database('./config/database.db');
   return db;
 };
@@ -74,9 +73,7 @@ const createTables = (cb) => {
     + 'eye_color TEXT,'
     + 'birth_year TEXT,'
     + 'gender TEXT,'
-    + 'homeworld INTEGER,'
-    + 'consumables TEXT,'
-    + 'vehicle_class TEXT)');
+    + 'homeworld INTEGER)');
 
 
   db.run('CREATE TABLE Films('
@@ -117,7 +114,6 @@ const createTables = (cb) => {
   db.run('CREATE TABLE People_Species(people_id INTEGER, species_id INTEGER)');
   db.run('CREATE TABLE Species_Films(species_id INTEGER, films_id INTEGER)');
 
-  // console.log('Openning connections');
   db.close();
   if (cb) {
     cb();

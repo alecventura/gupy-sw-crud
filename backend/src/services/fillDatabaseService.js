@@ -1,46 +1,33 @@
 const fetch = require('node-fetch');
 
-const generatePlanetInsertSQL = (planetsJSON) => {
-  return planetsJSON.reduce((string, item, index) => {
-    const firstCharacter = index === 0 ? '' : ',';
-    const itemSplited = item.url.trim().split('/');
-    return `${string}${firstCharacter} ('${itemSplited[itemSplited.length - 2]}', '${item.name}', '${item.created}', '${item.edited}',
-      '${item.url}', '${item.rotation_period}', '${item.orbital_period}', '${item.diameter}', 
-      '${item.climate}', '${item.gravity}', '${item.surface_water}', '${item.population}', '${item.terrain}')`;
-  }, 'INSERT INTO Planets (id, name, created, edited, url, rotation_period, '
-    + 'orbital_period, diameter, climate, gravity, surface_water, '
-    + 'population, terrain) VALUES ');
-};
+let app = null;
 
-const insertPlanets = (url, array, application) => {
+const insertData = (url, array, dataInsertCallbackFunction) => {
   fetch(url)
     .then(y => y.json())
     .then((result) => {
       if (result.next) {
-        insertPlanets(result.next, array.concat(result.results), application);
+        insertData(result.next, array.concat(result.results), dataInsertCallbackFunction);
       } else {
-        const db = application.config.dbConnection.connSqlite();
-        const sql = generatePlanetInsertSQL(array.concat(result.results));
-        console.log(sql);
-        db.run(sql);
-        db.close();
+        dataInsertCallbackFunction(array.concat(result.results));
       }
     })
     .catch(err => console.error(err));
 };
 
-const fillDataBase = (application) => {
+const fillDataBase = () => {
   const apiUrl = 'https://swapi.co/api/';
-  insertPlanets(`${apiUrl}planets`, [], application);
-
-  // const urls = [
-  //   `${apiUrl}planets`,
-  //   `${apiUrl}starships`,
-  //   `${apiUrl}vehicles`,
-  //   `${apiUrl}people`,
-  //   `${apiUrl}films`,
-  //   `${apiUrl}species`,
-  // ];
+  insertData(`${apiUrl}films`, [], app.src.data.filmsData.insertFilms);
+  insertData(`${apiUrl}people`, [], app.src.data.peopleData.insertPeople);
+  insertData(`${apiUrl}planets`, [], app.src.data.planetsData.insertPlanets);
+  insertData(`${apiUrl}species`, [], app.src.data.speciesData.insertSpecies);
+  insertData(`${apiUrl}starships`, [], app.src.data.starshipsData.insertStarships);
+  insertData(`${apiUrl}vehicles`, [], app.src.data.vehiclesData.insertVehicles);
 };
 
-module.exports = { fillDataBase };
+module.exports = function PlanetsData(application) {
+  app = application;
+  return {
+    fillDataBase,
+  };
+};
