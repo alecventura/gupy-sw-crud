@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import component from './component';
 
 const mapStateToProps = state => ({
-  main: state.main
+  main: state.main,
 });
 
 const mapDispatchToProps = ({});

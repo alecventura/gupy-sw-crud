@@ -7,3 +7,13 @@ html, body {
     min-width: 280px;
     font-family: 'Roboto', sans-serif;
   }
+
+  .footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: #E3E370;
+    margin-top: 10px;
+    color: #2323AC;
+    border-radius: 6px;
+}
