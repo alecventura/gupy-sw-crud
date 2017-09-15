@@ -30,6 +30,7 @@ class DisplayTable extends React.Component {
   }
 
   render() {
+    console.log('COMPONENT STATE', this.props);
     const data = this.props.data;
     if(this.props.loaded){
       if(data && data.length){
@@ -42,6 +43,7 @@ class DisplayTable extends React.Component {
               columns={columns}
               defaultPageSize={data.length}
               className="-striped -highlight"
+              showPagination={false}
             />
         );
       } else {

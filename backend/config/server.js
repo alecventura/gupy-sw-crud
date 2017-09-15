@@ -5,6 +5,7 @@ const cors = require('cors');
 const app = express();
 
 app.use(cors());
+app.disable('etag');
 
 consign()
   .include('src/routes')

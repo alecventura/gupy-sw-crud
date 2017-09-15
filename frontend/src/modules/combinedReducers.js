@@ -8,12 +8,12 @@ import displayTable from './displayTable/reducer';
 const reducersCombined = combineReducers({
   routing: routerReducer,
   notification,
-  films: displayTable,
-  people: displayTable,
-  planets: displayTable,
-  species: displayTable,
-  starships: displayTable,
-  vehicles: displayTable,
+  films: displayTable('films'),
+  people: displayTable('people'),
+  planets: displayTable('planets'),
+  species: displayTable('species'),
+  starships: displayTable('starships'),
+  vehicles: displayTable('vehicles'),
 });
 
 export default reducersCombined;

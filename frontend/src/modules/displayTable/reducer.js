@@ -6,9 +6,10 @@ const init = {
   },
 };
 
-const displayTable = (state = init, action) => {
+const displayTable = namespace => (state = init, action) => {
+  // console.log('REDUCER STATE', state);
   switch (action.type) {
-    case 'TOGGLE_LOADING_DATA': {
+    case `${namespace}/TOGGLE_LOADING_DATA`: {
       return {
         ...state,
         displayTable: {
@@ -17,7 +18,7 @@ const displayTable = (state = init, action) => {
         },
       };
     }
-    case 'DATA_LOADED': {
+    case `${namespace}/DATA_LOADED`: {
       return {
         ...state,
         displayTable: {

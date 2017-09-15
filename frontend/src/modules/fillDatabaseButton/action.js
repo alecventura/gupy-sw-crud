@@ -12,7 +12,6 @@ export const handleSubmit = () =>
         });
       })
       .catch((e) => {
-        console.log(e.message);
         dispatch({
           type: 'NOTIFICATION',
           message: e.message,

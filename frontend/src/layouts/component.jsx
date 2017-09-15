@@ -18,6 +18,7 @@ const MainLayout = () => (
       <p>Star Wars Data into a SQL database</p>
         <nav>
           <ul>
+            <li><Link to='/'>Home</Link></li>
             <li><Link to='/films'>Films</Link></li>
             <li><Link to='/people'>People</Link></li>
             <li><Link to='/planets'>Planets</Link></li>
@@ -32,12 +33,12 @@ const MainLayout = () => (
 
     <div className="mainContainer">
       <Route exact path="/" component={Home} />
-      <Route exact path="/films" component={ () => <DisplayTable dataLoadUrl="/films" entity="films"/>} />
-      <Route exact path="/people" component={ () => <DisplayTable dataLoadUrl="/people" entity="people"/>} />
-      <Route exact path="/planets" component={ () => <DisplayTable dataLoadUrl="/planets" entity="planets"/>} />
-      <Route exact path="/species" component={ () => <DisplayTable dataLoadUrl="/species" entity="species"/>} />
-      <Route exact path="/starships" component={ () => <DisplayTable dataLoadUrl="/starships" entity="starships"/>} />
-      <Route exact path="/vehicles" component={ () => <DisplayTable dataLoadUrl="/vehicles" entity="vehicles"/>} />
+      <Route exact path="/films" component={ () => <DisplayTable dataLoadUrl="/films" namespace="films"/>} />
+      <Route exact path="/people" component={ () => <DisplayTable dataLoadUrl="/people" namespace="people"/>} />
+      <Route exact path="/planets" component={ () => <DisplayTable dataLoadUrl="/planets" namespace="planets"/>} />
+      <Route exact path="/species" component={ () => <DisplayTable dataLoadUrl="/species" namespace="species"/>} />
+      <Route exact path="/starships" component={ () => <DisplayTable dataLoadUrl="/starships" namespace="starships"/>} />
+      <Route exact path="/vehicles" component={ () => <DisplayTable dataLoadUrl="/vehicles" namespace="vehicles"/>} />
     </div>
 
     <footer className="footer">
