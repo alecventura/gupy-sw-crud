@@ -4,12 +4,12 @@ import { BrowserRouter, Link, Route } from 'react-router-dom';
 import style from './style.scss';
 import Home from '../modules/home/component';
 import Notification from '../modules/notification/container';
+import DisplayTable from '../modules/displayTable/container';
 
 const defaultProps = {
   main: {},
 };
 
-const HomePage = () => <h2>HOME PAGE </h2>
 const MainLayout = () => (
   <BrowserRouter>
   <div>
@@ -32,13 +32,12 @@ const MainLayout = () => (
 
     <div className="mainContainer">
       <Route exact path="/" component={Home} />
-      <Route exact path="/films" component={HomePage} />
-      <Route exact path="/films/:id" component={Home} />
-      <Route exact path="/people" component={Home} />
-      <Route exact path="/planets" component={Home} />
-      <Route exact path="/species" component={Home} />
-      <Route exact path="/starships" component={Home} />
-      <Route exact path="/vehicles" component={Home} />
+      <Route exact path="/films" component={ () => <DisplayTable dataLoadUrl="/films" entity="films"/>} />
+      <Route exact path="/people" component={ () => <DisplayTable dataLoadUrl="/people" entity="people"/>} />
+      <Route exact path="/planets" component={ () => <DisplayTable dataLoadUrl="/planets" entity="planets"/>} />
+      <Route exact path="/species" component={ () => <DisplayTable dataLoadUrl="/species" entity="species"/>} />
+      <Route exact path="/starships" component={ () => <DisplayTable dataLoadUrl="/starships" entity="starships"/>} />
+      <Route exact path="/vehicles" component={ () => <DisplayTable dataLoadUrl="/vehicles" entity="vehicles"/>} />
     </div>
 
     <footer className="footer">
