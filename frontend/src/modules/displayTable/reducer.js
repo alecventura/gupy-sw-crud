@@ -7,7 +7,6 @@ const init = {
 };
 
 const displayTable = namespace => (state = init, action) => {
-  // console.log('REDUCER STATE', state);
   switch (action.type) {
     case `${namespace}/TOGGLE_LOADING_DATA`: {
       return {

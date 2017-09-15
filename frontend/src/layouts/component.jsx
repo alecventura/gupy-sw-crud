@@ -5,6 +5,7 @@ import style from './style.scss';
 import Home from '../modules/home/component';
 import Notification from '../modules/notification/container';
 import DisplayTable from '../modules/displayTable/container';
+import Button from '../modules/linkButton/component';
 
 const defaultProps = {
   main: {},
@@ -15,16 +16,16 @@ const MainLayout = () => (
   <div>
 
     <header>
-      <p>Star Wars Data into a SQL database</p>
+      <p className="headerTitle">Star Wars Data into a SQL database</p>
         <nav>
           <ul>
-            <li><Link to='/'>Home</Link></li>
-            <li><Link to='/films'>Films</Link></li>
-            <li><Link to='/people'>People</Link></li>
-            <li><Link to='/planets'>Planets</Link></li>
-            <li><Link to='/species'>Species</Link></li>
-            <li><Link to='/starships'>Starships</Link></li>
-            <li><Link to='/vehicles'>Vehicles</Link></li>
+            <li><Button location='/' text='Home' className='headerLinkButton' /></li>
+            <li><Button location='/films' text='Films' className='headerLinkButton' /></li>
+            <li><Button location='/people' text='People' className='headerLinkButton' /></li>
+            <li><Button location='/planets' text='Planets' className='headerLinkButton' /></li>
+            <li><Button location='/species' text='Species' className='headerLinkButton' /></li>
+            <li><Button location='/starships' text='Starships' className='headerLinkButton' /></li>
+            <li><Button location='/vehicles' text='Vehicles' className='headerLinkButton' /></li>
           </ul>
         </nav>
     </header>
