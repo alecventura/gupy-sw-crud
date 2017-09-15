@@ -1,7 +1,7 @@
 import thunk from 'redux-thunk';
 import { createStore, compose, applyMiddleware } from 'redux';
-import { syncHistoryWithStore } from 'react-router-redux';
-import { createBrowserHistory } from 'history';
+// import { syncHistoryWithStore } from 'react-router-redux';
+// import { createBrowserHistory } from 'history';
 
 import reducersCombined from './modules/combinedReducers';
 
@@ -13,9 +13,9 @@ const store = createStore(
   compose(applyMiddleware(thunk), enhacers),
 );
 
-export const history = syncHistoryWithStore(
-  createBrowserHistory(),
-  store,
-);
+// export const history = syncHistoryWithStore(
+//   createBrowserHistory(),
+//   store,
+// );
 
 export default store;
