@@ -78,14 +78,27 @@ const insertPeople = (peopleJSON) => {
 
 const getAll = cb => new Promise((resolve, reject) => {
   const db = app.config.dbConnection.connSqlite();
-  return db.all('SELECT * FROM People', [], (err, rows) => {
-    if (err) {
-      reject(err);
-    } else {
-      resolve(cb(rows));
-    }
-    db.close();
-  });
+  return db.all(`
+  select p.*,
+  GROUP_CONCAT(DISTINCT pf.films_id) as films,
+  GROUP_CONCAT(DISTINCT ps.species_id) as species,
+  GROUP_CONCAT(DISTINCT vp.vehicles_id) as vehicles,
+  GROUP_CONCAT(DISTINCT sp.starships_id) as starships
+  from People p 
+  inner join People_Films pf on pf.people_id = p.id 
+  inner join People_Species ps on ps.people_id = p.id
+  inner join Vehicles_People vp on vp.people_id = p.id 
+  inner join Starships_People sp on sp.people_id = p.id 
+  group by p.id;
+  `
+    , [], (err, rows) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(cb(rows));
+      }
+      db.close();
+    });
 }).catch(err => console.error(err));
 
 module.exports = function PeopleData(application) {
