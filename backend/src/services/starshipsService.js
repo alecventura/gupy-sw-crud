@@ -1,3 +1,10 @@
-const getAll = (application, cb) => application.src.data.starshipsData.getAll(cb);
+let app = null;
 
-module.exports = { getAll };
+const getAll = cb => app.src.data.starshipsData.getAll(cb);
+
+module.exports = function starshipsService(application) {
+  app = application;
+  return {
+    getAll,
+  };
+};

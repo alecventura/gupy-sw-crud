@@ -1,3 +1,10 @@
-const getAll = (application, cb) => application.src.data.speciesData.getAll(cb);
+let app = null;
 
-module.exports = { getAll };
+const getAll = cb => app.src.data.speciesData.getAll(cb);
+
+module.exports = function speciesService(application) {
+  app = application;
+  return {
+    getAll,
+  };
+};

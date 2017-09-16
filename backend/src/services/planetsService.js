@@ -1,3 +1,10 @@
-const getAll = (application, cb) => application.src.data.planetsData.getAll(cb);
+let app = null;
 
-module.exports = { getAll };
+const getAll = cb => app.src.data.planetsData.getAll(cb);
+
+module.exports = function planetsService(application) {
+  app = application;
+  return {
+    getAll,
+  };
+};

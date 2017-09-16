@@ -76,7 +76,7 @@ const insertPeople = (peopleJSON) => {
   }, 1000);
 };
 
-const getAll = cb => new Promise((resolve, reject) => {
+const getAll = (buildURLs, cb) => new Promise((resolve, reject) => {
   const db = app.config.dbConnection.connSqlite();
   return db.all(`
   select p.*,
@@ -85,17 +85,17 @@ const getAll = cb => new Promise((resolve, reject) => {
   GROUP_CONCAT(DISTINCT vp.vehicles_id) as vehicles,
   GROUP_CONCAT(DISTINCT sp.starships_id) as starships
   from People p 
-  inner join People_Films pf on pf.people_id = p.id 
-  inner join People_Species ps on ps.people_id = p.id
-  inner join Vehicles_People vp on vp.people_id = p.id 
-  inner join Starships_People sp on sp.people_id = p.id 
+  left join People_Films pf on pf.people_id = p.id 
+  left join People_Species ps on ps.people_id = p.id
+  left join Vehicles_People vp on vp.people_id = p.id 
+  left join Starships_People sp on sp.people_id = p.id 
   group by p.id;
   `
     , [], (err, rows) => {
       if (err) {
         reject(err);
       } else {
-        resolve(cb(rows));
+        resolve(buildURLs(rows, cb));
       }
       db.close();
     });

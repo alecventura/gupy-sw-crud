@@ -10,6 +10,7 @@ app.disable('etag');
 consign()
   .include('src/routes')
   .then('config/dbConnection.js')
+  .then('config/constants.js')
   .then('src/services')
   .then('src/data')
   .then('src/controllers')
