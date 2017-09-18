@@ -13,15 +13,15 @@ const generateSpeciesInsertSQL = (speciesJSON) => {
       '${item.url}', 
       '${item.classification.replace(/'/g, "''")}', 
       '${item.designation}', 
-      '${item.hair_color}', 
-      '${item.skin_color}', 
-      '${item.eye_color}', 
+      '${item.hair_colors}', 
+      '${item.skin_colors}', 
+      '${item.eye_colors}', 
       '${item.average_height}', 
       '${item.average_lifespan}',
       ${urlHomeworld ? urlHomeworld[urlHomeworld.length - 2] : 0}, 
       '${item.language.replace(/'/g, "''")}')`;
   }, 'INSERT INTO Species (id, name, created, edited, url, classification, '
-    + 'designation, hair_color, skin_color, eye_color, average_height, '
+    + 'designation, hair_colors, skin_colors, eye_colors, average_height, '
     + 'average_lifespan, homeworld, language) VALUES ');
   return sql;
 };
