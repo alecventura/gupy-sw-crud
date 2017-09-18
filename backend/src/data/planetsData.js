@@ -64,16 +64,25 @@ const insertPlanets = (planetsJSON) => {
   }, 1000);
 };
 
-const getAll = cb => new Promise((resolve, reject) => {
+const getAll = (buildURLs, cb) => new Promise((resolve, reject) => {
   const db = app.config.dbConnection.connSqlite();
-  return db.all('SELECT * FROM Planets', [], (err, rows) => {
-    if (err) {
-      reject(err);
-    } else {
-      resolve(cb(rows));
-    }
-    db.close();
-  });
+  return db.all(`
+  select p.*,
+  GROUP_CONCAT(DISTINCT pf.films_id) as films,
+  GROUP_CONCAT(DISTINCT pp.people_id) as residents
+  from Planets p 
+  left join Planets_Films pf on pf.planets_id = p.id 
+  left join Planets_People pp on pp.planets_id = p.id
+  group by p.id;
+  `
+    , [], (err, rows) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(buildURLs(rows, cb));
+      }
+      db.close();
+    });
 }).catch(err => console.error(err));
 
 module.exports = function PlanetsData(application) {

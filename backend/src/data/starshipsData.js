@@ -79,16 +79,25 @@ const insertStarships = (starshipsJSON) => {
   }, 1000);
 };
 
-const getAll = cb => new Promise((resolve, reject) => {
+const getAll = (buildURLs, cb) => new Promise((resolve, reject) => {
   const db = app.config.dbConnection.connSqlite();
-  return db.all('SELECT * FROM Starships', [], (err, rows) => {
-    if (err) {
-      reject(err);
-    } else {
-      resolve(cb(rows));
-    }
-    db.close();
-  });
+  return db.all(`
+  select s.*,
+  GROUP_CONCAT(DISTINCT ps.people_id) as pilots,
+  GROUP_CONCAT(DISTINCT sf.films_id) as films
+  from Starships s 
+  left join Starships_People ps on ps.starships_id = s.id 
+  left join Starships_Films sf on sf.starships_id = s.id
+  group by s.id;
+  `
+    , [], (err, rows) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(buildURLs(rows, cb));
+      }
+      db.close();
+    });
 }).catch(err => console.error(err));
 
 module.exports = function StarshipsData(application) {
