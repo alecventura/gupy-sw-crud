@@ -1,8 +1,27 @@
 import { connect } from 'react-redux';
 import component from './component';
 
-const mapStateToProps = state => ({
-  notification: state.notification,
+let timer;
+
+const notification = (success, message) => ({
+  type: 'NOTIFICATION',
+  success,
+  message,
 });
 
-export default connect(mapStateToProps, {})(component);
+const hideNotification = () => (dispatch) => {
+  clearTimeout(timer);
+  timer = setTimeout(() => {
+    dispatch(notification(false, ''));
+  }, 4000);
+};
+
+const mapStateToProps = state => ({
+  ...state.notification,
+});
+
+const mapDispatchToProps = ({
+  hideNotification,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(component);
